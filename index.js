@@ -2,7 +2,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-
 const client = require('prom-client');
 const collectDefaultMetrics = client.collectDefaultMetrics;
 const prefix = 'forethought';
@@ -46,10 +45,6 @@ app.get("/", function (req, res) {
   res.render("index", { task: task, complete: complete });
 });
 
-app.get('/metrics', function(req,res) {
-  res.status(200).set('Content-Type', 'text/plain');
-  res.end(promClient.register.metrics());
-});
 
 // listen for connections
 app.listen(8080, function() {
