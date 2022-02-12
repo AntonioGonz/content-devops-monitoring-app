@@ -3,6 +3,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+// Prom Config
+const prom = require('prom-client') 
+
+// Prom Config: Coklect default
+const collectDefaultMetrics = prom.collectDefaultMetrics;
+collectDefaultMetrics({ prefix: 'app' })
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
@@ -39,6 +46,12 @@ app.post("/removetask", function(req, res) {
 // get website files
 app.get("/", function (req, res) {
   res.render("index", { task: task, complete: complete });
+});
+
+// Prom Config: Add metrics endpoint
+app.get("/metrics", async function(req,res) {
+  res.set('Content-Type', prom.register.contentType);
+  res.end(await prom.register.metrics());
 });
 
 // listen for connections
