@@ -4,11 +4,11 @@ var bodyParser = require('body-parser');
 var app = express();
 
 // Prom Config
-const prom = require('prom-client') 
+const prom = require('prom-client') ;
 
 // Prom Config: Coklect default
 const collectDefaultMetrics = prom.collectDefaultMetrics;
-collectDefaultMetrics({ prefix: 'app' })
+collectDefaultMetrics({ prefix: 'app' });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
