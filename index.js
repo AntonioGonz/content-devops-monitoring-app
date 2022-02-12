@@ -49,8 +49,8 @@ app.get("/", function (req, res) {
 });
 
 // Prom Config: Add metrics endpoint
-app.get('/metrics', async function (req,res) {
-  res.set('Content-Type', prom.register.contentType);
+app.get("/metrics", async function (req,res) {
+  res.set("Content-Type", prom.register.contentType);
   res.end(await prom.register.metrics());
 });
 
