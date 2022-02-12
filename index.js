@@ -2,10 +2,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-const client = require('prom-client');
-const collectDefaultMetrics = client.collectDefaultMetrics;
-const prefix = 'forethought';
-collectDefaultMetrics({ prefix });
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
