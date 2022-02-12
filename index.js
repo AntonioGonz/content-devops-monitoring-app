@@ -3,7 +3,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 const client = require('prom-client');
-
+const collectDefaultMetrics = client.collectDefaultMetrics;
+const prefix = 'forethought';
+collectDefaultMetrics({ prefix });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
@@ -43,6 +45,10 @@ app.get("/", function (req, res) {
   res.render("index", { task: task, complete: complete });
 });
 
+app.get("/metrics", async function (req,res) {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
+});
 
 // listen for connections
 app.listen(8080, function() {
